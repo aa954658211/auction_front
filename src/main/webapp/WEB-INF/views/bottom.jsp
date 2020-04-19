@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <div class="main_nav_bottom">
-    <nav class="navbar navbar-default">
+    <nav class="navbar navbar-default navbar-fixed-bottom">
         <div class="container" align="center">
             <style>
                 .nav-tabs
@@ -10,7 +10,7 @@
                     line-height: 40px;
                 }
             </style>
-            <ul class="nav nav-tabs nav-tabs-justified">
+            <ul class="nav nav-tabs nav-tabs-justified ">
                 <div class="row" align="center">
                     <div class="col-md-4 col-sm-4 col-xs-4" align="center"><li><a href="#">Bootstrap1</a></li></div>
                     <div class="col-md-4 col-sm-4 col-xs-4" align="center"><li><a href="#">Bootstrap2</a></li></div>

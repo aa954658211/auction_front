@@ -10,33 +10,36 @@
             <img class="img-rounded" src="${APP_PATH}/img/${item.picture}" style="width: 100%; height: 100%; max-height: 450px; min-height: 450px">
         </div>
         <div class="col-md-6">
-            <p class="bg-info">${item.name}:${item.description}</p>
-
-            <div class="well well-sm">
-                <div id="fnTimeCountDown" data-end="${item.endTime.toLocaleString()}">
-                    出价倒计时：
-                    <span class="day">00</span>天
-                    <span class="hour">00</span>时
-                    <span class="mini">00</span>分
-                    <span class="sec">00</span>秒
-                    <span class="hm">000</span>
+            <form id="recordForm" onsubmit="return false;">
+                <input type="hidden" name="itemId" value="${item.itemId}">
+                <input type="hidden" name="userId" value="<shiro:principal property="userId"/>">
+                <p class="bg-info">${item.name}:${item.description}</p>
+                <div class="well well-sm">
+                    <div id="fnTimeCountDown" data-end="${item.endTime.toLocaleString()}">
+                        出价倒计时：
+                        <span class="day">00</span>天
+                        <span class="hour">00</span>时
+                        <span class="mini">00</span>分
+                        <span class="sec">00</span>秒
+                        <span class="hm">000</span>
+                    </div>
                 </div>
-            </div>
-            <h4>起拍价：<span class="label label-info">￥${item.startprice}</span></h4>
-            <h5>选择竞价：</h5>
-            <div>
-                <button id="sub">-</button>
-                <input type="text" name="price" value="${item.startprice}" style="text-align: center;" id="price" onblur="original()"/>
-                <button id="inc">+</button><br />
-            </div><br/>
-            <div class="well well-sm">
-                出价记录（0）
-            </div>
-            <button type="button" class="btn btn-success btn-lg btn-block">立即出价</button>
-            <h4>拍卖信息</h4>
-            <h5>开拍时间:<fmt:formatDate value="${item.startTime}" pattern="YYYY/MM/dd HH:mm:ss"/></h5>
-            <h5>所属类别:${item.itemType.name}</h5>
-            <h5>结束时间:<fmt:formatDate value="${item.endTime}" pattern="YYYY/MM/dd HH:mm:ss"/></h5>
+                <h4>起拍价：<span class="label label-info">￥${item.startprice}</span></h4>
+                <h5>选择竞价：</h5>
+                <div>
+                    <button id="sub">-</button>
+                    <input type="text" name="price" value="${item.startprice}" style="text-align: center;" id="price" onblur="original()"/>
+                    <button id="inc">+</button><br />
+                </div><br/>
+                <div class="well well-sm">
+                    出价记录（0）
+                </div>
+                <button type="button" class="btn btn-success btn-lg btn-block" id="bid">立即出价</button>
+                <h4>拍卖信息</h4>
+                <h5>开拍时间:<fmt:formatDate value="${item.startTime}" pattern="YYYY/MM/dd HH:mm:ss"/></h5>
+                <h5>所属类别:${item.itemType.name}</h5>
+                <h5>结束时间:<fmt:formatDate value="${item.endTime}" pattern="YYYY/MM/dd HH:mm:ss"/></h5>
+            </form>
         </div>
     </div>
 </div>
@@ -57,7 +60,7 @@
         }else{
             price-=price%dev;
         }
-        if(price == original1 || price < original1){
+        if(price <= original1){
             $("#price").val(original1);
             return false;
         }
@@ -120,7 +123,21 @@
             }
             $("#price").val(price);
         });
-
+        $("#bid").click(function () {
+                $.ajax({
+                    type:'post',
+                    dataType:'json',
+                    url:"${APP_PATH}/auctionRecord/save",
+                    data:$("#recordForm").serialize(),
+                    success:function (result) {
+                        if (result.code == 100){
+                            layer.msg("上架成功", {icon: 1, time: 10000, offset: '0px'});
+                        }else{
+                            layer.alert(result.message, {icon: 5, offset: '0px'});
+                        }
+                    }
+                });
+            });
     });
 </script>
 </body>

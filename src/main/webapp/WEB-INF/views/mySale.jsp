@@ -104,7 +104,7 @@
         function refreshTable() {
             dataTable.bootstrapTable('refresh', {
                 url: list_url,
-                pageSize: 10,
+                pageSize: 5,
                 pageNumber: 1
             });
         }
@@ -115,7 +115,7 @@
             } else if (rows.length != 1) {
                 window.parent.layer.msg("一次只能修改一条数据!", {icon: 2, time: 1000, offset: 't'})
             } else {
-                window.location.href = '${APP_PATH}/item/update?itemId=' + rows[0].itemId;
+                window.location.href = '${APP_PATH}/item/toUpdate?itemId=' + rows[0].itemId;
             }
         });
 
@@ -129,9 +129,10 @@
                     $.ajax({
                         url: '${APP_PATH}/item/delete/' + rows[0].itemId,
                         type: 'delete',
+                        dataType:"json",
                         success: function (response) {
                             if (response.code == 100) {
-                                window.parent.layer.msg(response.msg, {icon: 1, time: 1000, offset: 't'});
+                                window.parent.layer.msg("删除成功", {icon: 1, time: 1000, offset: 't'});
                                 refreshTable();
                             } else {
                                 window.parent.layer.alert(response.msg, {icon: 5, offset: 't'});
@@ -141,22 +142,21 @@
                 })
             } else {
                 window.parent.layer.confirm("确认批量删除?", {icon: 3, offset: 't'}, function () {
-                    var ids = new Array();//要删除的用户的id的集合
-                    for (var i = 0; i < rows.length; i++) {
-                        ids.push(rows[i].userId);
+                    let ids='';//要删除的用户的id的集合
+                    for (let i = 0; i < rows.length; i++) {
+                        ids+=rows[i].itemId+',';
                     }
+                    ids.substring(0,ids.length-1);
                     $.ajax({
-                        url: '${ctx}/sys/user/deletebatch',
-                        contentType: "application/json; charset=UTF-8",//发送给服务器的是json数据
-                        type: 'post',
+                        url: '${APP_PATH}/item/deleteBatch?ids='+ids,
+                        type: 'delete',
                         dateType: 'json',
-                        data: JSON.stringify(ids),
                         success: function (response) {
-                            if (response.code == 0) {
-                                window.parent.layer.msg(response.msg, {icon: 1, time: 1000, offset: 't'});
+                            if (response.code == 100) {
+                                window.parent.layer.msg("删除成功", {icon: 1, time: 1000, offset: 't'});
                                 refreshTable();
                             } else {
-                                window.parent.layer.alert(response.msg, {icon: 5, offset: 't'});
+                                window.parent.layer.alert(response.message, {icon: 5, offset: 't'});
                             }
                         }
                     });

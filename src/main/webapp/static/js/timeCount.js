@@ -39,8 +39,6 @@ $.extend($.fn,{
                         mini: "00",
                         hour: "00",
                         day: "00",
-                        month: "00",
-                        year: "0"
                     };
                     if(mss > 0){
                         pms.hm = f.haomiao(mss % 1000);
@@ -50,7 +48,14 @@ $.extend($.fn,{
                         pms.day = Math.floor((dur / 86400)) > 0? f.zero(Math.floor((dur / 86400)) % 30) : "00";
                     }else{
                         pms.hm = "000";
-                        //alert('结束了');
+                        $.ajax({
+                            url:"${APP_PATH}/test",
+                            dataType:"json",
+                            type:"get",
+                            success:function (result) {
+                                alert(result);
+                            }
+                        })
                         return;
                     }
                     return pms;

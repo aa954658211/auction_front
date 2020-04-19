@@ -64,6 +64,7 @@ public class ItemController {
             //添加item,并设置图片路径
             item.setPicture(uuid+suffix);
             itemService.save(item);
+            //创建一个定时器
         }else{
             return Msg.fail();
         }
@@ -77,7 +78,7 @@ public class ItemController {
         return "itemDetail";
     }
 
-    @RequestMapping("/update")
+    @RequestMapping("/toUpdate")
     public String toUpdate(Integer itemId,Model model){
         //先查出所有类型
         List<ItemType> types = itemTypeService.getAll();
@@ -87,10 +88,9 @@ public class ItemController {
         return "itemUpdate";
     }
 
-    @DeleteMapping("/delete/itemId")
+    @DeleteMapping("/delete/{itemId}")
     @ResponseBody
     public Msg delete(@PathVariable Integer itemId){
-        System.out.println(itemId);
         int delete = itemService.delete(itemId);
         if (delete>0){
             return Msg.success();
@@ -98,11 +98,14 @@ public class ItemController {
         return Msg.fail();
     }
 
-    @PutMapping("/test/{id}")
     @ResponseBody
-    public Msg test(@PathVariable Integer id){
-        System.out.println(id);
-        return Msg.success();
+    @DeleteMapping("deleteBatch")
+    public Msg deleteBatch(String ids){
+        int i = itemService.deleteBatch(ids);
+        if (i>0){
+            return Msg.success();
+        }
+        return Msg.fail();
     }
 
     @PostMapping("/update/{itemId}")

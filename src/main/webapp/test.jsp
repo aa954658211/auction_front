@@ -21,10 +21,10 @@
         $("#test").click(function () {
             alert("33");
             $.ajax({
-                url:"${APP_PATH}/item/update2/1",
+                url:"${APP_PATH}/item/test/4",
                 dataType:"json",
-                type:"post",
-                data:{name:"qer",description:"32432"},
+                type:"put",
+                data:{name:"gdfgf",description:"dfgdfg"},
                 success:function (result) {
                     console.log(result);
                 }

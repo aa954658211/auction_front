@@ -28,4 +28,8 @@ public interface AuctionRecordMapper {
     int updateByPrimaryKeySelective(AuctionRecord record);
 
     int updateByPrimaryKey(AuctionRecord record);
+
+    AuctionRecord findPriceByItemId(Integer itemId);
+
+    int updateStatus(Integer itemId);
 }

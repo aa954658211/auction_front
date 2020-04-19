@@ -54,6 +54,7 @@
             <value>
                 /static/**=anon
                 /img/**=anon
+                /auctionRecord/**=authc
                 /user/save=anon
                 /user/**=authc
                 /item/detail=anon

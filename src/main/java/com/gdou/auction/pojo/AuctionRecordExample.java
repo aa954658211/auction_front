@@ -295,52 +295,52 @@ public class AuctionRecordExample {
             return (Criteria) this;
         }
 
-        public Criteria andPriceEqualTo(Long value) {
+        public Criteria andPriceEqualTo(Integer value) {
             addCriterion("price =", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotEqualTo(Long value) {
+        public Criteria andPriceNotEqualTo(Integer value) {
             addCriterion("price <>", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceGreaterThan(Long value) {
+        public Criteria andPriceGreaterThan(Integer value) {
             addCriterion("price >", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceGreaterThanOrEqualTo(Long value) {
+        public Criteria andPriceGreaterThanOrEqualTo(Integer value) {
             addCriterion("price >=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceLessThan(Long value) {
+        public Criteria andPriceLessThan(Integer value) {
             addCriterion("price <", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceLessThanOrEqualTo(Long value) {
+        public Criteria andPriceLessThanOrEqualTo(Integer value) {
             addCriterion("price <=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceIn(List<Long> values) {
+        public Criteria andPriceIn(List<Integer> values) {
             addCriterion("price in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotIn(List<Long> values) {
+        public Criteria andPriceNotIn(List<Integer> values) {
             addCriterion("price not in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceBetween(Long value1, Long value2) {
+        public Criteria andPriceBetween(Integer value1, Integer value2) {
             addCriterion("price between", value1, value2, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotBetween(Long value1, Long value2) {
+        public Criteria andPriceNotBetween(Integer value1, Integer value2) {
             addCriterion("price not between", value1, value2, "price");
             return (Criteria) this;
         }
@@ -402,6 +402,76 @@ public class AuctionRecordExample {
 
         public Criteria andTimeNotBetween(Date value1, Date value2) {
             addCriterion("time not between", value1, value2, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(String value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(String value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(String value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(String value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(String value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(String value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLike(String value) {
+            addCriterion("status like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotLike(String value) {
+            addCriterion("status not like", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<String> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<String> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(String value1, String value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(String value1, String value2) {
+            addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
     }

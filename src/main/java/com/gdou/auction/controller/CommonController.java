@@ -49,10 +49,10 @@ public class CommonController {
         model.addAttribute("items",items);
         return "index";
     }
-    @PutMapping("/test/{id}")
     @ResponseBody
-    public Msg test(@PathVariable Integer id){
-        System.out.println(id);
+    @RequestMapping("/test")
+    public Msg test(){
+        System.out.println("fdsf");
         return Msg.success();
     }
 }

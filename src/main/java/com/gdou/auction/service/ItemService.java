@@ -46,4 +46,6 @@ public interface ItemService {
      * @return
      */
     long count(ItemExample itemExample);
+
+    int deleteBatch(String ids);
 }

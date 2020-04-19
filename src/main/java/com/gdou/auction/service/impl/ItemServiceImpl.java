@@ -4,9 +4,11 @@ import com.gdou.auction.mapper.ItemMapper;
 import com.gdou.auction.pojo.Item;
 import com.gdou.auction.pojo.ItemExample;
 import com.gdou.auction.service.ItemService;
+import com.gdou.auction.utill.PathUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +30,12 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public int delete(Integer itemId) {
+        //删除图片
+        Item item = get(itemId);
+        File file = new File(PathUtil.IMGPATH+item.getPicture());
+        if (file.exists()){
+            file.delete();
+        }
         return itemMapper.deleteByPrimaryKey(itemId);
     }
 
@@ -56,5 +64,14 @@ public class ItemServiceImpl implements ItemService {
         ItemExample itemExample = new ItemExample();
         itemExample.createCriteria().andEndTimeGreaterThanOrEqualTo(new Date());
         return itemMapper.selectByExampleWithItemType(itemExample);
+    }
+
+    @Override
+    public int deleteBatch(String ids) {
+        String[] split = ids.split(",");
+        for (String s : split) {
+            delete(Integer.parseInt(s));
+        }
+        return 1;
     }
 }

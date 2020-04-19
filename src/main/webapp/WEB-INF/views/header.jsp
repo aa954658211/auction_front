@@ -36,7 +36,7 @@
                 <li id="main"><a href="${APP_PATH}/index" >首页 <span class="sr-only">(current)</span></a></li>
                 <li id="sale"><a href="${APP_PATH}/item/toSale" >我要拍卖物品</a></li>
             </ul>
-            <form class="navbar-form navbar-left">
+            <form class="navbar-form navbar-left" id="search">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="搜索你想要的">
                 </div>

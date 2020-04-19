@@ -9,9 +9,11 @@ public class AuctionRecord {
 
     private Integer userId;
 
-    private Long price;
+    private Integer price;
 
     private Date time;
+
+    private String status;
 
     public Integer getId() {
         return id;
@@ -37,11 +39,11 @@ public class AuctionRecord {
         this.userId = userId;
     }
 
-    public Long getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
@@ -51,5 +53,13 @@ public class AuctionRecord {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

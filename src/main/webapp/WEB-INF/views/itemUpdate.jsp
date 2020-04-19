@@ -14,6 +14,7 @@
         <div class="col-md-10">
             <form class="form-horizontal" id="updateForm" onsubmit="return false;" enctype="multipart/form-data">
                 <input type="hidden" name="userId" value="<shiro:principal property="userId"/>">
+                <input type="hidden" name="_method" value="put">
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">拍卖品名称</label>
                     <div class="col-sm-10">
@@ -35,13 +36,13 @@
                 <div class="form-group">
                     <label for="upstart" class="col-sm-2 control-label">起拍时间</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control"  name="startTime" id="upstart" readonly>
+                        <input type="text" class="form-control" value="<fmt:formatDate value="${item.startTime}" pattern="YYYY/MM/dd HH:mm:ss"/>"  name="startTime" id="upstart" readonly>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="upend" class="col-sm-2 control-label">结束时间</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control"  name="endTime" id="upend" readonly>
+                        <input type="text" class="form-control" value="<fmt:formatDate value="${item.endTime}" pattern="YYYY/MM/dd HH:mm:ss"/>"  name="endTime" id="upend" readonly>
                     </div>
                 </div>
                 <div class="form-group">
@@ -90,7 +91,7 @@
             $("#updateForm").on("submit",function () {
                 $(this).ajaxSubmit({
                     type:'post',
-                    dataType:"json",
+                    dataType:'json',
                     url:"${APP_PATH}/item/update/${item.itemId}",
                     data:$("#updateForm").serialize(),
                     success:function (result) {

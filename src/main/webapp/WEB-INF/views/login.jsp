@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="${APP_PATH}/static/js/bootstrap.min.js"></script>
 	<script src="${APP_PATH}/static/bootstrap-validator/js/bootstrapValidator.min.js"></script>
 	<link href="${APP_PATH}/static/bootstrap-validator/css/bootstrapValidator.min.css" rel="stylesheet" />
+	<link rel="shutcut icon" href="${APP_PATH}/static/img/page_white_freehand.png" type="image/x-icon">
 </head>
 <body>
 	<div class="lowin lowin-blue">

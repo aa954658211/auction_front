@@ -5,8 +5,9 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="item_id" jdbcType="INTEGER" property="itemId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="price" jdbcType="INTEGER" property="price" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, item_id, user_id, price, time
+    id, item_id, user_id, price, time, status
   </sql>
   <select id="selectByExample" parameterType="com.gdou.auction.pojo.AuctionRecordExample" resultMap="BaseResultMap">
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="com.gdou.auction.pojo.AuctionRecord">
     insert into auction_record (id, item_id, user_id, 
-      price, time)
+      price, time, status
+      )
     values (#{id,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{price,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP})
+      #{price,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.gdou.auction.pojo.AuctionRecord">
     insert into auction_record
@@ -123,6 +126,9 @@
       <if test="time != null">
         time,
       </if>
+      <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -135,10 +141,13 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="price != null">
-        #{price,jdbcType=DECIMAL},
+        #{price,jdbcType=INTEGER},
       </if>
       <if test="time != null">
         #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -161,10 +170,13 @@
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.price != null">
-        price = #{record.price,jdbcType=DECIMAL},
+        price = #{record.price,jdbcType=INTEGER},
       </if>
       <if test="record.time != null">
         time = #{record.time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -176,8 +188,9 @@
     set id = #{record.id,jdbcType=INTEGER},
       item_id = #{record.itemId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      price = #{record.price,jdbcType=DECIMAL},
-      time = #{record.time,jdbcType=TIMESTAMP}
+      price = #{record.price,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -192,10 +205,13 @@
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=DECIMAL},
+        price = #{price,jdbcType=INTEGER},
       </if>
       <if test="time != null">
         time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -204,8 +220,17 @@
     update auction_record
     set item_id = #{itemId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
-      price = #{price,jdbcType=DECIMAL},
-      time = #{time,jdbcType=TIMESTAMP}
+      price = #{price,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="findPriceByItemId" resultMap="BaseResultMap" parameterType="integer">
+    select <include refid="Base_Column_List"/>
+    from auction_record
+    where item_id=#{param1} and price =(select MAX(price) from auction_record);
+  </select>
+  <update id="updateStatus" parameterType="integer">
+    update auction_record set `status` ='出局' where item_id = #{param1};
   </update>
 </mapper>
