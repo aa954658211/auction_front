@@ -32,13 +32,18 @@ public interface ItemService {
     int update(Item item);
 
     /**
-     * 查出所有上传的拍卖品
+     * 查出所有上传的未过期的拍卖品
      * @return
      */
     List<Item> list();
 
     Item get(Integer itemId);
 
+    /**
+     * 找到个人的商品
+     * @param itemExample
+     * @return
+     */
     List<Item> findListByUserIdAndName(ItemExample itemExample);
 
     /**
@@ -47,5 +52,17 @@ public interface ItemService {
      */
     long count(ItemExample itemExample);
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
     int deleteBatch(String ids);
+
+    /**
+     * 更新状态
+     * @param item
+     * @return
+     */
+    int updateStatusByUserIdAndItemId(Item item);
 }

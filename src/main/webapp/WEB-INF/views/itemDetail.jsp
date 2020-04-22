@@ -124,6 +124,9 @@
             $("#price").val(price);
         });
         $("#bid").click(function () {
+                if($(":input[name='userId']").val()==null || $(":input[name='userId']").val()==''){
+                    window.location.href="${APP_PATH}/login";
+                }
                 $.ajax({
                     type:'post',
                     dataType:'json',
@@ -131,7 +134,8 @@
                     data:$("#recordForm").serialize(),
                     success:function (result) {
                         if (result.code == 100){
-                            layer.msg("上架成功", {icon: 1, time: 10000, offset: '0px'});
+                            layer.msg("出价成功", {icon: 1, time: 5000, offset: '0px'});
+                            window.location.reload();
                         }else{
                             layer.alert(result.message, {icon: 5, offset: '0px'});
                         }

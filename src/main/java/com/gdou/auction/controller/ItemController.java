@@ -3,8 +3,11 @@ package com.gdou.auction.controller;
 import com.gdou.auction.pojo.Item;
 import com.gdou.auction.pojo.ItemType;
 import com.gdou.auction.pojo.Msg;
+import com.gdou.auction.service.AuctionRecordService;
 import com.gdou.auction.service.ItemService;
 import com.gdou.auction.service.ItemTypeService;
+import com.gdou.auction.service.OrderService;
+import com.gdou.auction.utill.MyTimerTask;
 import com.gdou.auction.utill.PathUtil;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Timer;
 import java.util.UUID;
 
 /**
@@ -30,6 +35,12 @@ public class ItemController {
     private ItemTypeService itemTypeService;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private AuctionRecordService auctionRecordService;
+    @Autowired
+    private OrderService orderService;
+    @Autowired
+    private Timer timer;
 
     @RequestMapping("/toSale")
     public String toSale(Model model){
@@ -41,7 +52,7 @@ public class ItemController {
 
     @PostMapping("/sale")
     @ResponseBody
-    public Msg sale(Item item, @RequestParam(value = "auctionImg",required = true) MultipartFile file){
+    public Msg sale(Item item, @RequestParam(value = "auctionImg",required = true) MultipartFile file) throws ParseException {
         item.setStatus(1);
         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf("."));
@@ -64,7 +75,9 @@ public class ItemController {
             //添加item,并设置图片路径
             item.setPicture(uuid+suffix);
             itemService.save(item);
-            //创建一个定时器
+            //创建一个定时器,将item传入进去执行定时器
+            MyTimerTask timerTask = new MyTimerTask(auctionRecordService,itemService,orderService,item);
+            timer.schedule(timerTask,item.getEndTime());
         }else{
             return Msg.fail();
         }
