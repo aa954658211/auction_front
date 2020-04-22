@@ -63,6 +63,7 @@ public class ItemServiceImpl implements ItemService {
     public List<Item> list() {
         ItemExample itemExample = new ItemExample();
         itemExample.createCriteria().andEndTimeGreaterThanOrEqualTo(new Date());
+        System.out.println("32432");
         return itemMapper.selectByExampleWithItemType(itemExample);
     }
 
