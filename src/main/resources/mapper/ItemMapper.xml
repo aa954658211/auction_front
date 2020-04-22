@@ -133,7 +133,7 @@
       #{picture,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{itemTypeId,jdbcType=INTEGER},
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.gdou.auction.pojo.Item" useGeneratedKeys="true" keyProperty="itemId">
+  <insert id="insertSelective" parameterType="com.gdou.auction.pojo.Item">
     insert into item
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="itemId != null">

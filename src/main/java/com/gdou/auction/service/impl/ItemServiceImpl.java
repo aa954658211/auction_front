@@ -67,14 +67,6 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int updateStatusByUserIdAndItemId(Item item) {
-        ItemExample itemExample = new ItemExample();
-        ItemExample.Criteria criteria = itemExample.createCriteria();
-        criteria.andUserIdEqualTo(item.getUserId()).andItemIdEqualTo(item.getItemId());
-        return itemMapper.updateByExampleSelective(item,itemExample);
-    }
-
-    @Override
     public int deleteBatch(String ids) {
         String[] split = ids.split(",");
         for (String s : split) {

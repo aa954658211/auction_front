@@ -26,9 +26,6 @@
         <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
         <property name="basePackage" value="com.gdou.auction.mapper"/>
     </bean>
-
-    <bean class="java.util.Timer" id="timer"></bean>
-
     <!--配置事务-->
     <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
         <property name="dataSource" ref="dataSource"/>

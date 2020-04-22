@@ -48,8 +48,14 @@ $.extend($.fn,{
                         pms.day = Math.floor((dur / 86400)) > 0? f.zero(Math.floor((dur / 86400)) % 30) : "00";
                     }else{
                         pms.hm = "000";
-                        $("#bid").attr("disabled","disabled");
-                        alert("此拍卖已经结束");
+                        $.ajax({
+                            url:"${APP_PATH}/test",
+                            dataType:"json",
+                            type:"get",
+                            success:function (result) {
+                                alert(result);
+                            }
+                        })
                         return;
                     }
                     return pms;

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.gdou.auction.pojo.Order">
     <id column="order_id" jdbcType="INTEGER" property="orderId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="address_id" jdbcType="INTEGER" property="addressId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -109,7 +109,7 @@
       status, address_id, create_time, 
       update_time, order_no, item_id
       )
-    values (#{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{price,jdbcType=INTEGER}, 
+    values (#{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
       #{status,jdbcType=INTEGER}, #{addressId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{orderNo,jdbcType=VARCHAR}, #{itemId,jdbcType=INTEGER}
       )
@@ -153,7 +153,7 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="price != null">
-        #{price,jdbcType=INTEGER},
+        #{price,jdbcType=DECIMAL},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -191,7 +191,7 @@
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.price != null">
-        price = #{record.price,jdbcType=INTEGER},
+        price = #{record.price,jdbcType=DECIMAL},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
@@ -220,7 +220,7 @@
     update order
     set order_id = #{record.orderId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      price = #{record.price,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DECIMAL},
       status = #{record.status,jdbcType=INTEGER},
       address_id = #{record.addressId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -238,7 +238,7 @@
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=INTEGER},
+        price = #{price,jdbcType=DECIMAL},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -264,7 +264,7 @@
   <update id="updateByPrimaryKey" parameterType="com.gdou.auction.pojo.Order">
     update order
     set user_id = #{userId,jdbcType=INTEGER},
-      price = #{price,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
       status = #{status,jdbcType=INTEGER},
       address_id = #{addressId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

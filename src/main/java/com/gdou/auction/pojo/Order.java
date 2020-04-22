@@ -7,7 +7,7 @@ public class Order {
 
     private Integer userId;
 
-    private Integer price;
+    private Long price;
 
     private Integer status;
 
@@ -37,11 +37,11 @@ public class Order {
         this.userId = userId;
     }
 
-    public Integer getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
