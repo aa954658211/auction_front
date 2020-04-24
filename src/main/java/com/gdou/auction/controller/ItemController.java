@@ -3,10 +3,7 @@ package com.gdou.auction.controller;
 import com.gdou.auction.pojo.Item;
 import com.gdou.auction.pojo.ItemType;
 import com.gdou.auction.pojo.Msg;
-import com.gdou.auction.service.AuctionRecordService;
-import com.gdou.auction.service.ItemService;
-import com.gdou.auction.service.ItemTypeService;
-import com.gdou.auction.service.OrderService;
+import com.gdou.auction.service.*;
 import com.gdou.auction.utill.MyTimerTask;
 import com.gdou.auction.utill.PathUtil;
 import org.apache.commons.io.FileUtils;
@@ -39,6 +36,8 @@ public class ItemController {
     private AuctionRecordService auctionRecordService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private AddressService addressService;
     @Autowired
     private Timer timer;
 
@@ -76,7 +75,7 @@ public class ItemController {
             item.setPicture(uuid+suffix);
             itemService.save(item);
             //创建一个定时器,将item传入进去执行定时器
-            MyTimerTask timerTask = new MyTimerTask(auctionRecordService,itemService,orderService,item);
+            MyTimerTask timerTask = new MyTimerTask(auctionRecordService,itemService,orderService,addressService,item);
             timer.schedule(timerTask,item.getEndTime());
         }else{
             return Msg.fail();

@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.gdou.auction.pojo.Order">
     <id column="order_id" jdbcType="INTEGER" property="orderId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="price" jdbcType="INTEGER" property="price" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="address_id" jdbcType="INTEGER" property="addressId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -80,7 +80,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -91,31 +91,31 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     where order_id = #{orderId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
+    delete from `order`
     where order_id = #{orderId,jdbcType=INTEGER}
   </delete>
   <delete id="deleteByExample" parameterType="com.gdou.auction.pojo.OrderExample">
-    delete from order
+    delete from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.gdou.auction.pojo.Order">
-    insert into order (order_id, user_id, price, 
+    insert into `order` (order_id, user_id, price,
       status, address_id, create_time, 
       update_time, order_no, item_id
       )
-    values (#{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, 
+    values (#{orderId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{price,jdbcType=INTEGER}, 
       #{status,jdbcType=INTEGER}, #{addressId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{orderNo,jdbcType=VARCHAR}, #{itemId,jdbcType=INTEGER}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.gdou.auction.pojo.Order">
-    insert into order
+    insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
         order_id,
@@ -153,7 +153,7 @@
         #{userId,jdbcType=INTEGER},
       </if>
       <if test="price != null">
-        #{price,jdbcType=DECIMAL},
+        #{price,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -176,13 +176,13 @@
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.gdou.auction.pojo.OrderExample" resultType="java.lang.Long">
-    select count(*) from order
+    select count(*) from `order`
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update order
+    update `order`
     <set>
       <if test="record.orderId != null">
         order_id = #{record.orderId,jdbcType=INTEGER},
@@ -191,7 +191,7 @@
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
       <if test="record.price != null">
-        price = #{record.price,jdbcType=DECIMAL},
+        price = #{record.price,jdbcType=INTEGER},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
@@ -217,10 +217,10 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update order
+    update `order`
     set order_id = #{record.orderId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      price = #{record.price,jdbcType=DECIMAL},
+      price = #{record.price,jdbcType=INTEGER},
       status = #{record.status,jdbcType=INTEGER},
       address_id = #{record.addressId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -232,13 +232,13 @@
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.gdou.auction.pojo.Order">
-    update order
+    update `order`
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="price != null">
-        price = #{price,jdbcType=DECIMAL},
+        price = #{price,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -262,9 +262,9 @@
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gdou.auction.pojo.Order">
-    update order
+    update `order`
     set user_id = #{userId,jdbcType=INTEGER},
-      price = #{price,jdbcType=DECIMAL},
+      price = #{price,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       address_id = #{addressId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

@@ -235,52 +235,52 @@ public class OrderExample {
             return (Criteria) this;
         }
 
-        public Criteria andPriceEqualTo(Long value) {
+        public Criteria andPriceEqualTo(Integer value) {
             addCriterion("price =", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotEqualTo(Long value) {
+        public Criteria andPriceNotEqualTo(Integer value) {
             addCriterion("price <>", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceGreaterThan(Long value) {
+        public Criteria andPriceGreaterThan(Integer value) {
             addCriterion("price >", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceGreaterThanOrEqualTo(Long value) {
+        public Criteria andPriceGreaterThanOrEqualTo(Integer value) {
             addCriterion("price >=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceLessThan(Long value) {
+        public Criteria andPriceLessThan(Integer value) {
             addCriterion("price <", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceLessThanOrEqualTo(Long value) {
+        public Criteria andPriceLessThanOrEqualTo(Integer value) {
             addCriterion("price <=", value, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceIn(List<Long> values) {
+        public Criteria andPriceIn(List<Integer> values) {
             addCriterion("price in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotIn(List<Long> values) {
+        public Criteria andPriceNotIn(List<Integer> values) {
             addCriterion("price not in", values, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceBetween(Long value1, Long value2) {
+        public Criteria andPriceBetween(Integer value1, Integer value2) {
             addCriterion("price between", value1, value2, "price");
             return (Criteria) this;
         }
 
-        public Criteria andPriceNotBetween(Long value1, Long value2) {
+        public Criteria andPriceNotBetween(Integer value1, Integer value2) {
             addCriterion("price not between", value1, value2, "price");
             return (Criteria) this;
         }

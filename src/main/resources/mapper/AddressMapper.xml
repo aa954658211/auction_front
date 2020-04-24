@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gdou.auction.mapper.AuctionRecordMapper">
-  <resultMap id="BaseResultMap" type="com.gdou.auction.pojo.AuctionRecord">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="item_id" jdbcType="INTEGER" property="itemId" />
+<mapper namespace="com.gdou.auction.mapper.AddressMapper">
+  <resultMap id="BaseResultMap" type="com.gdou.auction.pojo.Address">
+    <id column="address_id" jdbcType="INTEGER" property="addressId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="price" jdbcType="INTEGER" property="price" />
-    <result column="time" jdbcType="TIMESTAMP" property="time" />
-    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="is_default" jdbcType="INTEGER" property="isDefault" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,15 +68,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, item_id, user_id, price, time, status
+    address_id, user_id, username, address, phone, is_default
   </sql>
-  <select id="selectByExample" parameterType="com.gdou.auction.pojo.AuctionRecordExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.gdou.auction.pojo.AddressExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from auction_record
+    from address
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -87,96 +87,96 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from auction_record
-    where id = #{id,jdbcType=INTEGER}
+    from address
+    where address_id = #{addressId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from auction_record
-    where id = #{id,jdbcType=INTEGER}
+    delete from address
+    where address_id = #{addressId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.gdou.auction.pojo.AuctionRecordExample">
-    delete from auction_record
+  <delete id="deleteByExample" parameterType="com.gdou.auction.pojo.AddressExample">
+    delete from address
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.gdou.auction.pojo.AuctionRecord">
-    insert into auction_record (id, item_id, user_id, 
-      price, time, status
+  <insert id="insert" parameterType="com.gdou.auction.pojo.Address">
+    insert into address (address_id, user_id, username, 
+      address, phone, is_default
       )
-    values (#{id,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, 
-      #{price,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}
+    values (#{addressId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{isDefault,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.gdou.auction.pojo.AuctionRecord">
-    insert into auction_record
+  <insert id="insertSelective" parameterType="com.gdou.auction.pojo.Address">
+    insert into address
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="itemId != null">
-        item_id,
+      <if test="addressId != null">
+        address_id,
       </if>
       <if test="userId != null">
         user_id,
       </if>
-      <if test="price != null">
-        price,
+      <if test="username != null">
+        username,
       </if>
-      <if test="time != null">
-        time,
+      <if test="address != null">
+        address,
       </if>
-      <if test="status != null">
-        status,
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="isDefault != null">
+        is_default,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="itemId != null">
-        #{itemId,jdbcType=INTEGER},
+      <if test="addressId != null">
+        #{addressId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
       </if>
-      <if test="price != null">
-        #{price,jdbcType=INTEGER},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=VARCHAR},
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        #{isDefault,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.gdou.auction.pojo.AuctionRecordExample" resultType="java.lang.Long">
-    select count(*) from auction_record
+  <select id="countByExample" parameterType="com.gdou.auction.pojo.AddressExample" resultType="java.lang.Long">
+    select count(*) from address
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update auction_record
+    update address
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
-      <if test="record.itemId != null">
-        item_id = #{record.itemId,jdbcType=INTEGER},
+      <if test="record.addressId != null">
+        address_id = #{record.addressId,jdbcType=INTEGER},
       </if>
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
-      <if test="record.price != null">
-        price = #{record.price,jdbcType=INTEGER},
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="record.time != null">
-        time = #{record.time,jdbcType=TIMESTAMP},
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=VARCHAR},
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDefault != null">
+        is_default = #{record.isDefault,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -184,53 +184,54 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update auction_record
-    set id = #{record.id,jdbcType=INTEGER},
-      item_id = #{record.itemId,jdbcType=INTEGER},
+    update address
+    set address_id = #{record.addressId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
-      price = #{record.price,jdbcType=INTEGER},
-      time = #{record.time,jdbcType=TIMESTAMP},
-      status = #{record.status,jdbcType=VARCHAR}
+      username = #{record.username,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      is_default = #{record.isDefault,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.gdou.auction.pojo.AuctionRecord">
-    update auction_record
+  <update id="updateByPrimaryKeySelective" parameterType="com.gdou.auction.pojo.Address">
+    update address
     <set>
-      <if test="itemId != null">
-        item_id = #{itemId,jdbcType=INTEGER},
-      </if>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="price != null">
-        price = #{price,jdbcType=INTEGER},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
       </if>
-      <if test="time != null">
-        time = #{time,jdbcType=TIMESTAMP},
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        status = #{status,jdbcType=VARCHAR},
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null">
+        is_default = #{isDefault,jdbcType=INTEGER},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where address_id = #{addressId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.gdou.auction.pojo.AuctionRecord">
-    update auction_record
-    set item_id = #{itemId,jdbcType=INTEGER},
-      user_id = #{userId,jdbcType=INTEGER},
-      price = #{price,jdbcType=INTEGER},
-      time = #{time,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.gdou.auction.pojo.Address">
+    update address
+    set user_id = #{userId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=INTEGER}
+    where address_id = #{addressId,jdbcType=INTEGER}
   </update>
-  <select id="findPriceByItemId" resultMap="BaseResultMap" parameterType="integer">
-    select <include refid="Base_Column_List"/>
-    from auction_record
-    where item_id=#{param1} and price =(select MAX(price) from auction_record where item_id=#{param1});
+
+  <update id="updateIsDefault" parameterType="integer">
+    update address set is_default = 2 where user_id = #{param1};
+  </update>
+  <select id="findDefaultByUserId" parameterType="integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from address
+    where user_id=#{param1} and is_default=1
   </select>
-  <update id="updateStatus" parameterType="integer">
-    update auction_record set `status` ='出局' where item_id = #{param1};
-  </update>
 </mapper>
