@@ -5,6 +5,7 @@ import com.gdou.auction.pojo.OrderExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OrderMapper {
     long countByExample(OrderExample example);
@@ -19,7 +20,11 @@ public interface OrderMapper {
 
     List<Order> selectByExample(OrderExample example);
 
+    List<Order> selectByExampleWithUserAndItem(Map<String,Object> map);
+
     Order selectByPrimaryKey(Integer orderId);
+
+    Order selectByPrimaryKeyWithUserAndItem(Integer orderId);
 
     int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
 
@@ -28,4 +33,8 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    int confirm(Order order);
+
+    int pay(Integer orderId);
 }

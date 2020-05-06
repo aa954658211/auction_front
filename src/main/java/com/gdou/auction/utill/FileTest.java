@@ -2,14 +2,16 @@ package com.gdou.auction.utill;
 
 import com.gdou.auction.pojo.Order;
 import com.gdou.auction.service.OrderService;
+import com.gdou.auction.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Date;
-import java.util.UUID;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author hua
@@ -20,17 +22,23 @@ import java.util.UUID;
 public class FileTest {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private UserService userService;
+
     @Test
     public void test(){
-        Order order = new Order();
-        order.setCreateTime(new Date());
-        order.setItemId(55);
-        order.setPrice(12000);
-        order.setOrderNo(UUID.randomUUID().toString());
-        order.setStatus(0);
-        order.setUserId(35);
-        order.setUpdateTime(new Date());
-        order.setAddressId(23);
-        orderService.generate(order);
+        Integer status=1,userId=35;
+        Map<String,Object> map = new HashMap();
+        map.put("userId",userId);
+        if (status != null){
+            map.put("status",status);
+        }
+        List<Order> list = orderService.findListByUserIdAndStatus(map);
+        System.out.println(list.size());
+    }
+
+    @Test
+    public void test2(){
+        System.out.println(userService.findBalance(35));
     }
 }

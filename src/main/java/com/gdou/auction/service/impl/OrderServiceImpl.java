@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hua
@@ -20,16 +21,31 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order get(Integer orderId) {
-        return orderMapper.selectByPrimaryKey(orderId);
+        return orderMapper.selectByPrimaryKeyWithUserAndItem(orderId);
     }
 
     @Override
-    public List<Order> findListByUserIdAndName(OrderExample orderExample) {
-        return orderMapper.selectByExample(orderExample);
+    public List<Order> findListByUserIdAndStatus(Map<String,Object> map) {
+        return orderMapper.selectByExampleWithUserAndItem(map);
+    }
+
+    @Override
+    public int confirm(Order order) {
+        return orderMapper.confirm(order);
+    }
+
+    @Override
+    public long count(OrderExample orderExample) {
+        return orderMapper.countByExample(orderExample);
     }
 
     @Override
     public int generate(Order order) {
         return orderMapper.insertSelective(order);
+    }
+
+    @Override
+    public int pay(Integer orderId) {
+        return orderMapper.pay(orderId);
     }
 }

@@ -3,7 +3,7 @@
 <div class="col-md-2">
     <ul class="nav nav-pills nav-stacked">
         <li role="presentation" class="active"><a href="#">交易管理</a></li>
-        <li role="presentation"><a href="#">订单管理</a></li>
+        <li role="presentation"><a href="${APP_PATH}/order">订单管理</a></li>
         <li role="presentation"><a href="${APP_PATH}/item/toSale">上架拍卖品</a></li>
         <li role="presentation"><a href="#">我的收藏</a></li>
     </ul>

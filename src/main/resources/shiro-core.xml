@@ -47,6 +47,7 @@
                 /item/detail=anon
                 /item/**=authc
                 /address/**=authc
+                /order/**=authc
                 /logout=logout
             </value>
         </property>

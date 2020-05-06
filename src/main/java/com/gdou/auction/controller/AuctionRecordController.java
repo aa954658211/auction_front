@@ -25,25 +25,27 @@ public class AuctionRecordController {
     @ResponseBody
     public Msg save(AuctionRecord auctionRecord){
         auctionRecord.setTime(new Date());
-        //查询出价最高的人,查出这个人出没出过价，没出过就插入，出过就修改
+        //查询出价最高的人
         AuctionRecord high = auctionRecordService.findPriceByItemId(auctionRecord.getItemId());
-        if (high == null){
+        int i = 0;
+        if (high == null){   //还没有人出价
             auctionRecord.setStatus("领先");
             //将其他所有的状态改为出局
             auctionRecordService.updateStatus(auctionRecord.getItemId());
         }else{
+            //只能出价更高
             if (high.getPrice() >= auctionRecord.getPrice()){
-                auctionRecord.setStatus("出局");
+                return Msg.fail().add("high",auctionRecord.getPrice());
             }else {
                 auctionRecord.setStatus("领先");
                 //将其他所有的状态改为出局
                 auctionRecordService.updateStatus(auctionRecord.getItemId());
             }
         }
-        int save = auctionRecordService.save(auctionRecord);
-        if (save>0){
-            return Msg.success();
+        i = auctionRecordService.save(auctionRecord);
+        if (i>0){
+            return Msg.success().add("high",auctionRecord.getPrice());
         }
-        return Msg.fail();
+        return Msg.fail().add("high",auctionRecord.getPrice());
     }
 }

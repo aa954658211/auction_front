@@ -5,6 +5,7 @@ import com.gdou.auction.pojo.ItemExample;
 import com.gdou.auction.pojo.Msg;
 import com.gdou.auction.pojo.User;
 import com.gdou.auction.service.ItemService;
+import com.gdou.auction.service.OrderService;
 import com.gdou.auction.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,8 @@ public class UserController {
     private UserService userService;
     @Autowired
     private ItemService itemService;
+    @Autowired
+    private OrderService orderService;
 
     @PostMapping("/save")
     @ResponseBody
@@ -80,5 +83,21 @@ public class UserController {
         return map;
     }
 
+    @RequestMapping("/balance")
+    @ResponseBody
+    public Msg balance(Integer userId){
+        Integer balance = userService.findBalance(userId);
+        return Msg.success().add("balance",balance);
+    }
 
+    @PostMapping("/pay")
+    @ResponseBody
+    public Msg pay(Integer userId,Integer price,Integer orderId){
+        //完成付款操作,先将买家定金扣取，并且更改状态，收货后再将定金发送到卖家
+        int pay = userService.pay(userId, price);
+        orderService.pay(orderId);
+        if (pay>0)
+            return Msg.success();
+        return Msg.fail();
+    }
 }

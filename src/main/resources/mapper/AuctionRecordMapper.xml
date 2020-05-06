@@ -9,6 +9,19 @@
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
+  <resultMap id="BaseResultMapWithUser" type="com.gdou.auction.pojo.AuctionRecord">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="item_id" jdbcType="INTEGER" property="itemId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <association property="user" javaType="user">
+      <id column="user_id" property="userId"/>
+      <result column="username" property="username"/>
+    </association>
+  </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -84,12 +97,30 @@
       order by ${orderByClause}
     </if>
   </select>
+  <select id="selectByExampleWithUser" parameterType="com.gdou.auction.pojo.AuctionRecordExample" resultMap="BaseResultMapWithUser">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    id, item_id, a.user_id, price, time, a.`status`,u.user_id,username
+    from auction_record a left join `user` u on a.user_id = u.user_id
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from auction_record
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from auction_record
     where id = #{id,jdbcType=INTEGER}

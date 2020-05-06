@@ -1,5 +1,6 @@
 package com.gdou.auction.controller;
 
+import com.gdou.auction.pojo.AuctionRecord;
 import com.gdou.auction.pojo.Item;
 import com.gdou.auction.pojo.ItemType;
 import com.gdou.auction.pojo.Msg;
@@ -51,7 +52,7 @@ public class ItemController {
 
     @PostMapping("/sale")
     @ResponseBody
-    public Msg sale(Item item, @RequestParam(value = "auctionImg",required = true) MultipartFile file) throws ParseException {
+    public Msg sale(Item item, @RequestParam(value = "auctionImg",required = true) MultipartFile file)throws ParseException {
         item.setStatus(1);
         String fileName = file.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf("."));
@@ -86,6 +87,14 @@ public class ItemController {
     @RequestMapping("/detail")
     public String detail(Integer itemId,Model model){
         Item item = itemService.get(itemId);
+        List<AuctionRecord> auctionRecords = auctionRecordService.findListByItemId(itemId);
+        AuctionRecord high = auctionRecordService.findPriceByItemId(itemId);
+        if (high != null){
+            model.addAttribute("high",high.getPrice());
+        }else{
+            model.addAttribute("high",item.getStartprice());
+        }
+        model.addAttribute("auctionRecords",auctionRecords);
         model.addAttribute("item",item);
         return "itemDetail";
     }

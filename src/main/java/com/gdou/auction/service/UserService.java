@@ -14,4 +14,8 @@ public interface UserService {
     User findUserByUserId(Integer userId);
 
     int update(User user);
+
+    Integer findBalance(Integer userId);
+
+    int pay(Integer userId,Integer price);
 }

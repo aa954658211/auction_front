@@ -20,6 +20,7 @@ public interface AuctionRecordMapper {
     List<AuctionRecord> selectByExample(AuctionRecordExample example);
 
     AuctionRecord selectByPrimaryKey(Integer id);
+    List<AuctionRecord> selectByExampleWithUser(AuctionRecordExample example);
 
     int updateByExampleSelective(@Param("record") AuctionRecord record, @Param("example") AuctionRecordExample example);
 

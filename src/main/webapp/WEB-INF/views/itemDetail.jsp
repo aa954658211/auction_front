@@ -28,12 +28,34 @@
                 <h5>选择竞价：</h5>
                 <div>
                     <button id="sub">-</button>
-                    <input type="text" name="price" value="${item.startprice}" style="text-align: center;" id="price" onblur="original()"/>
+                    <input type="text" name="price" value="${high}" style="text-align: center;" id="price" onblur="original()"/>
                     <button id="inc">+</button><br />
                 </div><br/>
-                <div class="well well-sm">
-                    出价记录（0）
-                </div>
+                <c:if test="${auctionRecords.size()==0}">
+                    <div class="well well-sm">
+                        出价记录（0）
+                    </div>
+                </c:if>
+                <c:if test="${auctionRecords.size()!=0}">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" id="record"
+                                   href="#collapseTwo">
+                                    出价记录（${auctionRecords.size()}）
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseTwo" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                    <c:forEach items="${auctionRecords}" var="auctionRecord">
+                                        <p>${auctionRecord.user.username}&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${auctionRecord.time}" pattern="YYYY-MM-dd"/>
+                                                ${auctionRecord.price}&nbsp;&nbsp;&nbsp;&nbsp;<b style="border:1px solid;color: red">${auctionRecord.status}</b><p/>
+                                    </c:forEach>
+                            </div>
+                        </div>
+                     </div>
+                </c:if>
                 <button type="button" class="btn btn-success btn-lg btn-block" id="bid">立即出价</button>
                 <h4>拍卖信息</h4>
                 <h5>开拍时间:<fmt:formatDate value="${item.startTime}" pattern="YYYY/MM/dd HH:mm:ss"/></h5>
@@ -47,8 +69,11 @@
 <script type="text/javascript" src="${APP_PATH}/static/js/jquery.form.min.js"></script>
 <script src="${APP_PATH}/static/lib/layer/layer.js"></script>
 <script>
-    let original1 = parseInt($("#price").val());
+    let original1 = parseInt(${item.startprice});
     function original(){
+        if ($("#price").val()==""){
+            $("#price").val(original1);
+        }
         let price = $("#price").val();
         if(parseInt(price) < original1){
             $("#price").val(original1);
@@ -79,7 +104,7 @@
         $("#fnTimeCountDown").fnTimeCountDown("2018/07/08 18:45:13");
         //点击按钮在竞价区间里面减，点击减按钮如果值是小于原始值就复原，失去焦点也复原
         $("#inc").click(function(){
-            let price = parseInt($("#price").val());
+            let price = parseInt($("#price").val());                
             if(price>=0 && price < 100){
                 price = incUtil(price,10);
             }else if(price>=100 && price < 500){
@@ -123,6 +148,7 @@
             }
             $("#price").val(price);
         });
+        $("#record").click();
         $("#bid").click(function () {
             if($(":input[name='userId']").val()==null || $(":input[name='userId']").val()==''){
                 alert("请登录");
@@ -138,7 +164,7 @@
                             layer.msg("出价成功", {icon: 1, time: 10000, offset: '0px'});
                             window.location.reload();
                         }else{
-                            layer.alert(result.message, {icon: 5, offset: '0px'});
+                            layer.alert("出价要大于目前价格", {icon: 5, offset: '0px'});
                         }
                     }
                 });

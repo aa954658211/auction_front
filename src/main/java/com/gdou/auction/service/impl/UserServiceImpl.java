@@ -39,4 +39,18 @@ public class UserServiceImpl implements UserService {
     public User findUserByUserId(Integer userId) {
         return userMapper.selectByPrimaryKey(userId);
     }
+
+    @Override
+    public Integer findBalance(Integer userId) {
+        return userMapper.selectByPrimaryKey(userId).getBalance();
+    }
+
+    @Override
+    public int pay(Integer userId, Integer price) {
+        User user1 = userMapper.selectByPrimaryKey(userId);
+        User user = new User();
+        user.setUserId(userId);
+        user.setBalance(user1.getBalance()-price);
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
 }

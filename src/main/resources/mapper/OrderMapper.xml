@@ -12,6 +12,28 @@
     <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
     <result column="item_id" jdbcType="INTEGER" property="itemId" />
   </resultMap>
+  <resultMap id="BaseResultMapWithUserAndItem" type="com.gdou.auction.pojo.Order">
+    <id column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="address_id" jdbcType="INTEGER" property="addressId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="order_no" jdbcType="VARCHAR" property="orderNo" />
+    <result column="item_id" jdbcType="INTEGER" property="itemId" />
+    <association property="user" javaType="user">
+      <result column="username" jdbcType="VARCHAR" property="username" />
+      <result column="balance" jdbcType="INTEGER" property="balance" />
+    </association>
+    <association property="item" javaType="item">
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="startPrice" jdbcType="INTEGER" property="startprice" />
+      <result column="description" jdbcType="VARCHAR" property="description" />
+      <result column="picture" jdbcType="VARCHAR" property="picture" />
+    </association>
+  </resultMap>
+
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -88,12 +110,42 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByExampleWithUserAndItem" parameterType="map" resultMap="BaseResultMapWithUserAndItem">
+    select
+    o.order_id, o.user_id, o.price, o.`status`,
+		o.address_id, o.create_time, o.update_time,
+		o.order_no,o.item_id,u.username,u.balance,
+		i.name,i.startPrice,i.description,i.picture
+     from `order` o
+     LEFT JOIN `user` u on u.user_id=o.user_id
+     LEFT JOIN item i on i.item_id=o.item_id
+            WHERE
+            <if test="status!=null">
+              o.`status` =#{status} and
+            </if>
+              o.user_id =#{userId}
+  </select>
+
+
+  <select id="selectByPrimaryKeyWithUserAndItem" parameterType="map" resultMap="BaseResultMapWithUserAndItem">
     select 
+    o.order_id, o.user_id, o.price, o.`status`,
+		o.address_id, o.create_time, o.update_time,
+		o.order_no,o.item_id,u.username,u.balance,
+		i.name,i.startPrice,i.description,i.picture
+     from `order` o
+     LEFT JOIN `user` u on u.user_id=o.user_id
+     LEFT JOIN item i on i.item_id=o.item_id
+            WHERE o.order_id=#{orderId}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from `order`
     where order_id = #{orderId,jdbcType=INTEGER}
   </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from `order`
     where order_id = #{orderId,jdbcType=INTEGER}
@@ -273,4 +325,26 @@
       item_id = #{itemId,jdbcType=INTEGER}
     where order_id = #{orderId,jdbcType=INTEGER}
   </update>
+  <update id="confirm" parameterType="order">
+    update `order`
+    <set>
+      <if test="status != null">
+        status=status+1,
+      </if>
+      <if test="addressId != null">
+        address_id = #{addressId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where order_id=#{orderId}
+  </update>
+
+  <update id="pay" parameterType="integer">
+    update `order`
+        set status=status+1
+        where order_id=#{param1}
+  </update>
+
 </mapper>

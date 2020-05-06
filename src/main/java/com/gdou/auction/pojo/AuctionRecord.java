@@ -15,6 +15,16 @@ public class AuctionRecord {
 
     private String status;
 
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +71,17 @@ public class AuctionRecord {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "AuctionRecord{" +
+                "id=" + id +
+                ", itemId=" + itemId +
+                ", userId=" + userId +
+                ", price=" + price +
+                ", time=" + time +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

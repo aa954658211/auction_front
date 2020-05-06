@@ -4,6 +4,7 @@ import com.gdou.auction.pojo.Order;
 import com.gdou.auction.pojo.OrderExample;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author hua
@@ -16,8 +17,22 @@ public interface OrderService {
      * @return
      */
     int generate(Order order);
-
-    List<Order> findListByUserIdAndName(OrderExample orderExample);
-
+    /**
+     * 展示个人订单
+     * @param map
+     * @return
+     */
+    List<Order> findListByUserIdAndStatus(Map<String,Object> map);
+    /**
+     * 查看详情
+     * @param orderId
+     * @return
+     */
     Order get(Integer orderId);
+
+    long count(OrderExample orderExample);
+
+    int confirm(Order order);
+
+    int pay(Integer orderId);
 }
